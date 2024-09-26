@@ -10,41 +10,43 @@ function App() {
   const savedOperator = useRef(null);
   const operatorSaved = useRef(false);
   const equalClickedLast = useRef(false);
-  const [outputText, setOutputText] = useState("0"); //Sets up the useState for the output text
-  const getData = (data)=>{ // The function that retrives the data from the UI Console via props
+  const [outputText, setOutputText] = useState(0); //Sets up the useState for the output text
+  const getData = (dataElement)=>{ // The function that retrives the data from the UI Console via props
+    const data = dataElement.textContent; 
     if(data === "AC"){ // if input is AC, the Output clears
-      setOutputText("0");
+      setOutputText(0);
+      clearOperatorSelection();
       savedValue.current = null;
       savedOperator.current = null;
       equalClickedLast.current = false;
     }
     else if(data === "%" || data ==="+/-" || data==="/" || data === "x" || data === "-" || data === "+" || data === "="){
+      clearOperatorSelection();
       if(data != "="){
         equalClickedLast.current = false;
       }
-      handleOperator(data);
+      handleOperator(dataElement);
     }
     else if(operatorSaved.current === true){
       operatorSaved.current = false;
-      setOutputText(data);
+      setOutputText(Number(data));
     }
-    else if(outputText === "0"){ //if number is 0, it won't keep placing 0s
-      setOutputText(data);
+    else if(outputText === 0){ //if number is 0, it won't keep placing 0s
+      setOutputText(Number(data));
     }
     else{ // Otherwise place the next item in the string
-      setOutputText(outputText + data);
+      setOutputText(Number(outputText + data));
     }
   }
 
-  const handleOperator = (operator) =>{
-    console.log(`Operator Clicked: ` + operator);
-
+  const handleOperator = (operatorBtn) =>{
+    const operator = operatorBtn.textContent;
     switch(operator){
       case "%":
-        setOutputText(outputText / 100);
+        setOutputText(Number(outputText / 100));
         break;
       case "+/-":
-        setOutputText(outputText * -1);
+        setOutputText(Number(outputText * -1));
         break;
       case "=":
         if(savedValue != null && savedOperator != null){
@@ -93,6 +95,7 @@ function App() {
         break;
       default:
         savedOperator.current = operator;
+        operatorBtn.classList.add("active");
         savedValue.current = outputText;
         break;
     }
@@ -100,6 +103,17 @@ function App() {
     if(savedOperator != null){
       operatorSaved.current = true;
     }
+  }
+
+  const clearOperatorSelection = ()=> {
+    const aBtn = document.getElementById('plus');
+    const sBtn = document.getElementById('minus');
+    const mBtn = document.getElementById('multiply');
+    const dBtn = document.getElementById('divide');
+    const listOfOperators = [aBtn, sBtn, mBtn, dBtn];
+    listOfOperators.forEach(btn => {
+      btn.classList.remove("active");
+    });
   }
 
 

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 
 function OutputDisplay(props){
-
     return(
         <div id="Output" className="output-display-styles">
             {props.output}
@@ -10,7 +9,7 @@ function OutputDisplay(props){
 }
 
 OutputDisplay.propTypes = {
-    output: PropTypes.string
+    output: PropTypes.number
 }
 
 export default OutputDisplay

@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 function UIConsole(props){
 
     const handleClick = (event)=>{
-        props.interaction(event.target.textContent);
+        props.interaction(event.target);
      }
-    
+
     return(
         <div className="ui-console-styles">
             <div className="console-btn" id="ac" onClick={handleClick}>AC</div>
@@ -25,7 +25,7 @@ function UIConsole(props){
             <div className="console-btn" id="three" onClick={handleClick}>3</div>
             <div className="console-btn" id="plus" onClick={handleClick}>+</div>
             <div className="console-btn" id="zero" onClick={handleClick}>0</div>
-            <div className="console-btn" id="empty" onClick={handleClick}></div>
+            <div className="console-btn" id="empty"></div>
             <div className="console-btn" id="decimal" onClick={handleClick}>.</div>
             <div className="console-btn" id="equals" onClick={handleClick}>=</div>
         </div>
@@ -33,7 +33,8 @@ function UIConsole(props){
 }
 
 UIConsole.propTypes = {
-    interaction: PropTypes.func
+    interaction: PropTypes.func,
+    savedButton: PropTypes.string,
 }
 
 export default UIConsole
